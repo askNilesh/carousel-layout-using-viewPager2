@@ -8,6 +8,7 @@ Here is the output of this repositorie
 
 
 if you want make current page zoom like this image 
+
 ![Screenshot_1569240546](https://i.stack.imgur.com/Xm9HR.png)
 
 Then please use this PageTransformer
