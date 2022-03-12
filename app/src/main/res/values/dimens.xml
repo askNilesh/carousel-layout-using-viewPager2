@@ -4,4 +4,6 @@
     <dimen name="offset">30dp</dimen>
     <dimen name="pageMarginAndOffset">50dp</dimen>
 
+    <dimen name="next_item_visible_width">50dp</dimen>
+    <dimen name="viewpager_horizontal_margin">10dp</dimen>
 </resources>
