@@ -3,30 +3,34 @@
 # Other Transformation with ViewPager2  https://github.com/askNilesh/Viewpager-Transformation
 
 Here is the output of this repositorie 
-![untitled](https://user-images.githubusercontent.com/30828060/65403743-f5f7e980-ddf2-11e9-9c33-28b89feb4a82.gif)
 
-
+<img src="https://user-images.githubusercontent.com/30828060/65403743-f5f7e980-ddf2-11e9-9c33-28b89feb4a82.gif"  width="200" height="400" />
 
 if you want make current page zoom like this image 
 
-![Screenshot_1569240546](https://i.stack.imgur.com/Xm9HR.png)
+<img src="https://user-images.githubusercontent.com/30828060/158024722-4679f8a6-6178-4c77-8b63-cf79e032e9bf.png"  width="200" height="400" />
 
 Then please use this PageTransformer
 
-        float pageMargin = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
-        float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
+     private fun createCardHolder() {
 
-        myViewPager2.setPageTransformer((page, position) -> {
-            float myOffset = position * -(2 * pageOffset + pageMargin);
-            if (position < -1) {
-                page.setTranslationX(-myOffset);
-            } else if (position <= 1) {
-                float scaleFactor = Math.max(0.7f, 1 - Math.abs(position - 0.14285715f));
-                page.setTranslationX(myOffset);
-                page.setScaleY(scaleFactor);
-                page.setAlpha(scaleFactor);
-            } else {
-                page.setAlpha(0);
-                page.setTranslationX(myOffset);
-            }
-        });
+        viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewPager?.adapter = myAdapter
+        viewPager?.offscreenPageLimit = 1
+
+        val nextItemVisibleWidth = resources.getDimension(R.dimen.next_item_visible_width)
+        val currentItemMargin =
+            resources.getDimension(R.dimen.viewpager_horizontal_margin)
+        val pageTranslation = nextItemVisibleWidth + currentItemMargin
+        viewPager?.setPageTransformer { page: View, position: Float ->
+            page.translationX = -pageTranslation * position
+            page.scaleY = 1 - (0.25f * abs(position))
+            page.alpha = 0.25f + (1 - abs(position))
+        }
+        val itemDecoration = PagerMarginItemDecoration(
+            this,
+            R.dimen.viewpager_horizontal_margin
+        )
+        viewPager?.addItemDecoration(itemDecoration)
+    }
+
